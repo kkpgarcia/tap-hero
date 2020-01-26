@@ -11,6 +11,14 @@ public class GameState : State {
         get { return Owner.GameController; }
     }
 
+    protected PauseController PauseController {
+        get { return Owner.PauseController; }
+    }
+
+    protected ResultController ResultController {
+        get { return Owner.ResultController; }
+    }
+
     public void Awake() {
         Owner = this.GetComponent<GameBootstrap>();
     }
