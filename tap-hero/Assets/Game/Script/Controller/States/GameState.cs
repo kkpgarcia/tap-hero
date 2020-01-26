@@ -19,6 +19,10 @@ public class GameState : State {
         get { return Owner.ResultController; }
     }
 
+    protected AudioService AudioService {
+        get { return Owner.AudioService; }
+    }
+
     public void Awake() {
         Owner = this.GetComponent<GameBootstrap>();
     }

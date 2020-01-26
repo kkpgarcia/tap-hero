@@ -4,7 +4,7 @@
             ResultController.AddHomeButtonListener(OnClickedHome);
             ResultController.AddNextButtonListener(OnNextLevel);
             ResultController.AddRestartButtonListener(OnRestart);
-            
+            ResultController.AddAudioButtonListener(OnToggleAudio);
             Animate();
         });
         
@@ -15,6 +15,7 @@
             ResultController.RemoveHomeButtonListener(OnClickedHome);
             ResultController.RemoveNextButtonListener(OnNextLevel);
             ResultController.RemoveRestartButtonListener(OnRestart);
+            ResultController.RemoveAudioButtonListener(OnToggleAudio);
         });
     }
 
@@ -50,6 +51,6 @@
     }
 
     private void OnToggleAudio() {
-        
+        AudioService.ToggleAudio();
     }
 }

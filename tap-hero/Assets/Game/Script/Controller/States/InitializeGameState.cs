@@ -6,6 +6,8 @@ public class InitializeGameState : GameState {
          * All initialization goes here. Otherwise change to next
          * state.
          */
+        PersistentDataModel.GameSettings = new GameSettings();
+        
         this.Owner.ChangeState<LandingState>();
     }
     

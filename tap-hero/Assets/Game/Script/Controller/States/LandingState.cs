@@ -6,23 +6,23 @@ public class LandingState : GameState {
          * Add Listeners to buttons
          */
         MenuController.ShowMenu(() => {
-            MenuController.AddPlayButtonListener(StartGame);
-            MenuController.AddSettingsButtonListener(OpenSettings);
+            MenuController.AddPlayButtonListener(OnStartGame);
+            MenuController.AddAudioButtonListener(OnToggleButton);
         });
     }
 
     public override void Exit() {
-        MenuController.RemovePlayButtonListener(StartGame);
-        MenuController.RemoveSettingsButtonListener(OpenSettings);
+        MenuController.RemovePlayButtonListener(OnStartGame);
+        MenuController.RemoveAudioButtonListener(OnToggleButton);
     }
 
-    public void StartGame() {
+    public void OnStartGame() {
         MenuController.HideMenu(() => {
             Owner.ChangeState<TransitionToGameState>();
         });
     }
 
-    public void OpenSettings() {
-        
+    public void OnToggleButton() {
+        AudioService.ToggleAudio();
     }
 }

@@ -6,6 +6,7 @@ public class ResultController : MonoBehaviour {
     [SerializeField] private Button m_HomeButton;
     [SerializeField] private Button m_RestartButton;
     [SerializeField] private Button m_NextButton;
+    [SerializeField] private Button m_AudioButton;
     [SerializeField] private Panel m_ResultPanel;
     [SerializeField] private Image m_Overlay;
 
@@ -66,6 +67,11 @@ public class ResultController : MonoBehaviour {
         if(m_NextButton != null)
             m_NextButton.onClick.AddListener(action);
     }
+    
+    public void AddAudioButtonListener(UnityAction action) {
+        if(m_AudioButton != null)
+            m_AudioButton.onClick.AddListener(action);
+    }
 
     public void RemoveHomeButtonListener(UnityAction action) {
         if(m_HomeButton != null)
@@ -80,5 +86,10 @@ public class ResultController : MonoBehaviour {
     public void RemoveNextButtonListener(UnityAction action) {
         if(m_NextButton != null)
             m_NextButton.onClick.RemoveListener(action);
+    }
+    
+    public void RemoveAudioButtonListener(UnityAction action) {
+        if(m_AudioButton != null)
+            m_AudioButton.onClick.RemoveListener(action);
     }
 }
