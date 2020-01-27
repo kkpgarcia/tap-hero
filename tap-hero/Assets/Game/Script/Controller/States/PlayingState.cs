@@ -3,15 +3,24 @@
 public class PlayingState : GameState {
     public override void Enter() {
         base.Enter();
+       
+        Conductor.Initialize(AudioService);
+        
         GameController.AddPauseButtonListener(OnPause);
     }
 
-    protected override void OnTouch(object sender, InfoEventArgs<Touch[]> info) {
-        base.OnTouch(sender, info);
-        
-        /**
-         * Send touch positions to conductor class for assessment
-         */
+    protected override void OnTest(object sender, InfoEventArgs<int> info) {
+        base.OnTest(sender, info);
+
+        int input = info.Arg0;
+
+        if (input == -1) {
+            Debug.Log("Input on Left");
+        }
+
+        if (input == 1) {
+            Debug.Log("Input on Right");
+        }
     }
 
     private void OnPause() {

@@ -23,17 +23,24 @@ public class GameState : State {
         get { return Owner.AudioService; }
     }
 
+    protected Conductor Conductor {
+        get { return Owner.Conductor; }
+    }
+
     public void Awake() {
         Owner = this.GetComponent<GameBootstrap>();
     }
 
     protected override void AddListeners() {
         InputController.OnTouchInput += OnTouch;
+        InputController.OnTestInput += OnTest;
     }
 
     protected override void RemoveListeners() {
         InputController.OnTouchInput -= OnTouch;
+        InputController.OnTestInput += OnTest;
     }
 
     protected virtual void OnTouch(object sender, InfoEventArgs<Touch[]> info) { }
+    protected virtual void OnTest(object sender, InfoEventArgs<int> info) { }
 }
