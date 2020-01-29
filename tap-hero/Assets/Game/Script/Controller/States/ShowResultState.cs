@@ -1,6 +1,7 @@
 ﻿public class ShowResultState : GameState {
     public override void Enter() {
         AudioService.PlayMusic(AudioService.Music[0]);
+        AudioService.GetAudioSource().loop = true;
         ResultController.Show(() => {
             ResultController.AddHomeButtonListener(OnClickedHome);
             ResultController.AddNextButtonListener(OnNextLevel);

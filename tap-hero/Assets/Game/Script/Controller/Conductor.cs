@@ -15,7 +15,6 @@ public class Conductor : MonoBehaviour {
 
     public float[] trackSpawnX;
     public float finishLineY;
-    public float removeLineY;
     
     public float BPM;
     
@@ -27,7 +26,7 @@ public class Conductor : MonoBehaviour {
     private MusicNode[] previousMusicNodes;
 
     private float dspTimeSong;
-    public static float BeatsShownOnScreen = 4f;
+    public static float BeatsShownOnScreen = 3f;
 
     private AudioService m_AudioService;
     private int len;
@@ -49,6 +48,7 @@ public class Conductor : MonoBehaviour {
     public void Initialize(AudioService audioService) {
         m_AudioService = audioService;
         
+        this.AddObserver(RemoveNode, MusicNode.OnMissNode);
     }
     
     public void StartSong(UnityAction onFinish, UnityAction<MusicNode, Rank> onInput) {
@@ -82,6 +82,7 @@ public class Conductor : MonoBehaviour {
 
     public void Stop() {
         paused = false;
+        this.RemoveObserver(RemoveNode, MusicNode.OnMissNode);
         StartCoroutine(DestroyRoutine());
     }
 
@@ -149,10 +150,10 @@ public class Conductor : MonoBehaviour {
             LInputAnimator.Scale();
         }
         
-        if (Mathf.Abs(songPosition - currentNode.beat) < 2f) {
+        if (Mathf.Abs(songPosition - currentNode.beat) < 1.4f) {
             inputRank = Rank.PERFECT;
         }
-        else if (Mathf.Abs(songPosition - currentNode.beat) < 2.5f) {
+        else if (Mathf.Abs(songPosition - currentNode.beat) < 2f) {
             inputRank = Rank.GOOD;
         }
         else {
@@ -177,12 +178,10 @@ public class Conductor : MonoBehaviour {
             if (nextIndex < currTrack.Notes.Length && currTrack.Notes[nextIndex].note < beatToShow)
             {
                 SongInfo.Note currNote = currTrack.Notes[nextIndex];
-            
-                MusicNode musicNode = Instantiate(NodePrefab, new Vector3(i == 0 ? LeftParent.position.x : RightParent.position.x, Screen.height + 200, 0), this.transform.rotation, i == 0 ? LeftParent : RightParent);
-                musicNode.Initialize(i == 0 ? LeftParent.position.x : RightParent.position.x, Screen.height + 200, finishLineY, removeLineY, currNote.note, 1);
-                musicNode.GetComponent<UnityEngine.UI.Image>().enabled = true;
-
-                //m_NodeReference.Add(musicNode);
+                Vector3 parentPos = i == 0 ? LeftParent.position : RightParent.position;
+                MusicNode musicNode = Instantiate(NodePrefab, new Vector3(parentPos.x, Screen.height + 200, 0), this.transform.rotation, i == 0 ? LeftParent : RightParent);
+                musicNode.Initialize(parentPos.x, Screen.height + 200, finishLineY, 0, currNote.note);
+                
                 trackNextIndices[i]++; 
                 queueForTracks[i].Enqueue(musicNode);
             }
@@ -194,8 +193,20 @@ public class Conductor : MonoBehaviour {
                 paused = true;
 
                 m_OnFinish = null;
-                m_OnInput = null;
+                m_OnInput = null;    
             }
         }
+    }
+
+    public void RemoveNode(object sender, object args) {
+        MusicNode n = null;
+        if (queueForTracks[0].Contains((MusicNode) sender)) {
+            n = queueForTracks[0].Dequeue();
+        }
+
+        if (queueForTracks[1].Contains((MusicNode) sender)) {
+            n = queueForTracks[1].Dequeue();
+        }
+        m_OnInput(n, Rank.MISS);
     }
 }

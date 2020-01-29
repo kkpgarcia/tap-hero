@@ -31,6 +31,9 @@ public class PlayingState : GameState {
     }
 
     private void OnInput(MusicNode node, Conductor.Rank rank) {
+        if (node == null)
+            return;
+        
         switch (rank) {
             case Conductor.Rank.PERFECT:
                 ScoreController.AddScore(ScoreController.PERFECT_SCORE);
