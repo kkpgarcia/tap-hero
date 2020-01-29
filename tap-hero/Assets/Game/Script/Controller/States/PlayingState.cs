@@ -12,9 +12,20 @@ public class PlayingState : GameState {
         GameController.AddPauseButtonListener(OnPause);
     }
 
-    protected override void OnTest(object sender, InfoEventArgs<int> info) {
-        base.OnTest(sender, info);
+    protected override void OnTouch(object sender, InfoEventArgs<Touch[]> info) {
+        Touch[] touches = info.Arg0;
 
+        if (touches.Length > 0) {
+            Touch firstTouch = touches[0];
+
+            if (firstTouch.phase == TouchPhase.Began) {
+                int input = firstTouch.position.x < Screen.width / 2 ? -1 : 1;
+                Conductor.AsessInput(input);
+            }
+        }
+    }
+
+    protected override void OnTest(object sender, InfoEventArgs<int> info) {
         int input = info.Arg0;
         Conductor.AsessInput(input);
     }

@@ -21,13 +21,8 @@
     }
 
     private void Animate() {
-        /**
-         * Animate Star
-         */
-        
-        /*
-         * Animate Score
-         */
+        ResultController.AnimateStar();
+        ResultController.SetScore(ScoreController.GetScore());
     }
 
     private void OnClickedHome() {

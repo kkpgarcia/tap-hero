@@ -9,12 +9,26 @@ public class ResultController : MonoBehaviour {
     [SerializeField] private Button m_AudioButton;
     [SerializeField] private Panel m_ResultPanel;
     [SerializeField] private Image m_Overlay;
+    [SerializeField] private Text m_Score;
+    [SerializeField] private Image[] m_Stars;
 
     private const string SHOW_KEY = "Show";
     private const string HIDE_KEY = "Hide";
 
     private void Start() {
         m_ResultPanel.SetPosition(HIDE_KEY, false);
+    }
+
+    public void SetScore(int score) {
+        m_Score.text = score.ToString();
+    }
+
+    public void AnimateStar() {
+        foreach (Image i in m_Stars) {
+            Tweener tween = i.transform.ScaleTo(Vector3.one * 1.25f, 0.5f, EasingEquations.EaseInQuad);
+            tween.loopCount = 2;
+            tween.loopType = EasingControl.LoopType.PingPong;
+        }
     }
 
     public void Show(UnityAction onFinish) {

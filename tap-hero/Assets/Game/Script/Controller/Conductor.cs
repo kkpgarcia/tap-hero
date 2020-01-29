@@ -40,14 +40,11 @@ public class Conductor : MonoBehaviour {
     public Transform LeftParent;
     public Transform RightParent;
     
-
     private UnityAction m_OnFinish;
     private UnityAction<MusicNode, Rank> m_OnInput;
-    
-    private List<MusicNode> m_NodeReference = new List<MusicNode>();
-    
-    private List<SongInfo.Note> L = new List<SongInfo.Note>();
-    private List<SongInfo.Note> R = new List<SongInfo.Note>();
+
+    [SerializeField] private InputAnimator LInputAnimator;
+    [SerializeField] private InputAnimator RInputAnimator;
     
     public void Initialize(AudioService audioService) {
         m_AudioService = audioService;
@@ -144,6 +141,13 @@ public class Conductor : MonoBehaviour {
             return;
 
         Rank inputRank;
+
+        if (currentInput == 1) {
+            RInputAnimator.Scale();
+        }
+        else {
+            LInputAnimator.Scale();
+        }
         
         if (Mathf.Abs(songPosition - currentNode.beat) < 2f) {
             inputRank = Rank.PERFECT;
