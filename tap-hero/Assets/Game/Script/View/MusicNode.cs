@@ -5,7 +5,7 @@ public class MusicNode : MonoBehaviour {
 
     private float startY;
     private float endY;
-    private float beat;
+    public float beat;
     private float removeLineY;
     private int times;
 

@@ -27,6 +27,10 @@ public class GameState : State {
         get { return Owner.Conductor; }
     }
 
+    protected ScoreController ScoreController {
+        get { return Owner.ScoreController; }
+    }
+
     public void Awake() {
         Owner = this.GetComponent<GameBootstrap>();
     }
@@ -38,7 +42,7 @@ public class GameState : State {
 
     protected override void RemoveListeners() {
         InputController.OnTouchInput -= OnTouch;
-        InputController.OnTestInput += OnTest;
+        InputController.OnTestInput -= OnTest;
     }
 
     protected virtual void OnTouch(object sender, InfoEventArgs<Touch[]> info) { }

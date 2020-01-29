@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TransitionToGameState : GameState {
     public override void Enter() {
+        ScoreController.Reset();
         AudioService.StopMusic(1.0f);
         GameController.ShowMenu(OnTransitionFinished);
     }
@@ -12,7 +13,6 @@ public class TransitionToGameState : GameState {
     }
 
     IEnumerator DelayedStart() {
-        AudioService.PlayMusic(AudioService.Music[1]);
         yield return new WaitForSeconds(1);
         this.Owner.ChangeState<PlayingState>();
     }

@@ -22,26 +22,15 @@
     }
 
     private void OnExitGame() {
-        /**
-         * Transition to result state
-         */
+        Conductor.Stop();
         PauseController.Hide(() => {
             this.Owner.ChangeState<ShowResultState>();
         });
     }
 
     private void OnRestartGame() {
-        /**
-         * Clean-up state
-         */
-        
-        /**
-         * Restart Conductor
-         */
-        
-        /**
-         * Restart Score
-         */
+        Conductor.Restart();
+        ScoreController.Reset();
         
         PauseController.Hide(() => {
             this.Owner.ChangeState<TransitionToGameState>();
